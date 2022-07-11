@@ -8,14 +8,14 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bjs", schema = "tbaadm")
+@Table(name = "bjs"/*, schema = "tbaadm" */)
 @ToString
 public class Bjs {
 
-    @Id
     @Getter @Column(name = "sol_id", unique = true, nullable = false)
     private String sol_id;
 
+    @Id
     @Getter @Column(name = "job_id")
     private String job_id;
 
@@ -27,7 +27,7 @@ public class Bjs {
 
     @Getter @Column(name = "next_exec_date")
     private Date next_exec_date;
-
+    /*
     @Getter @Column(name = "job_active_flg")
     private char job_active_flg;
 
@@ -45,7 +45,7 @@ public class Bjs {
 
     @Getter @Column(name = "job_category")
     private char job_category;
-
+     */
     @Getter @Column(name = "job_group")
     private String job_group;
 }

@@ -19,8 +19,8 @@ public class BjsDaoImpl implements BjsDao{
 
     @Override
     @Transactional
-    public List<Bjs> getBjs(String sol_id) {
-        String query = "FROM Bjs WHERE sol_id = '" + sol_id + "'";
+    public List<Bjs> getBjs(/*String sol_id*/) {
+        String query = "FROM Bjs";// WHERE sol_id = '" + sol_id + "'";
         return entityManager.createQuery(query, Bjs.class).getResultList();
     }
     
