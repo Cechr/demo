@@ -1,5 +1,6 @@
 package com.example.demo.controllers;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.shell.standard.ShellMethod;
@@ -19,10 +20,12 @@ public class BjsController {
     private BjsDao bjsDao;
 
     @ShellMethod("Get a list of Batch Jobs in Table: Bjs (Only Important Information)")
-    public void getBjs(/*String sol_id*/) {
-        List<Bjs> listBjs = bjsDao.getBjs(/*sol_id*/);
+    public void getBjs(String sol_id) {
+        List<Bjs> listBjs = bjsDao.getBjs(sol_id);
 
-        String[] columnNames = {"#","sol_id","job_id","job_group","job_desc","next_exec_date","job_freq_type"};
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
+
+        String[] columnNames = {"#","sol_id","job_group","job_id","job_desc","next_exec_date","job_freq_type"};
         
         Object[][] data = new Object[listBjs.size()][columnNames.length];
 
@@ -31,17 +34,17 @@ public class BjsController {
             int j = columnNames.length;
             data[i][columnNames.length - (j--)] = i + 1;
             data[i][columnNames.length - (j--)] = listBjs.get(i).getSol_id();
+            data[i][columnNames.length - (j--)] = listBjs.get(i).getJob_group(); //== null ? "NULL" : listBjs.get(i).getJob_group();
             data[i][columnNames.length - (j--)] = listBjs.get(i).getJob_id();
-            data[i][columnNames.length - (j--)] = listBjs.get(i).getJob_group();
             data[i][columnNames.length - (j--)] = listBjs.get(i).getJob_desc();
-            data[i][columnNames.length - (j--)] = listBjs.get(i).getNext_exec_date();
+            data[i][columnNames.length - (j--)] = formatter.format(listBjs.get(i).getNext_exec_date());
             data[i][columnNames.length - (j--)] = listBjs.get(i).getJob_freq_type();
         }
 
         TextTable tt = new TextTable(columnNames, data);                                                         
         tt.printTable();
         System.out.println("");
-        System.out.println(listBjs.size() + " rows");
+        System.out.println(listBjs.size() + " row(s)");
     }
 
     @ShellMethod("Test format")
