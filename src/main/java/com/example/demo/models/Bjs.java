@@ -8,7 +8,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "bjs", schema = "tbaadm")
+@Table(name = "bjs"/*, schema = "tbaadm" */)
 @ToString
 public class Bjs {
 

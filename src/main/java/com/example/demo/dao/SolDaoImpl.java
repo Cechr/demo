@@ -8,20 +8,20 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.models.Bjs;
+import com.example.demo.models.Sol;
 
 @Repository
 @Transactional
-public class BjsDaoImpl implements BjsDao{
+public class SolDaoImpl implements SolDao{
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
     @Transactional
-    public List<Bjs> getBjsFromSol(String sol_id) {
-        String query = "FROM Bjs WHERE sol_id = '" + sol_id + "' AND del_flg = 'N'";
-        return entityManager.createQuery(query, Bjs.class).getResultList();
+    public List<Sol> checkSolByFlgCombination(String flg_combination) {
+        String query = "FROM Sol WHERE del_flg = 'N' AND db_stat_code || sol_cls_flg || sol_restartability_flg = '" + flg_combination + "'";
+        return entityManager.createQuery(query, Sol.class).getResultList();
     }
     
 }

@@ -19,9 +19,9 @@ public class BjsController {
     @Autowired
     private BjsDao bjsDao;
 
-    @ShellMethod("Get a list of Batch Jobs in Table: Bjs (Only Important Information)")
-    public void getBjs(String sol_id) {
-        List<Bjs> listBjs = bjsDao.getBjs(sol_id);
+    @ShellMethod(value = "Get a list of Batch Jobs for a Branch in Table: Bjs (Only Important Information)", key = "bjsfromsol")
+    public void getBjsFromSol(String sol_id) {
+        List<Bjs> listBjs = bjsDao.getBjsFromSol(sol_id);
 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 
