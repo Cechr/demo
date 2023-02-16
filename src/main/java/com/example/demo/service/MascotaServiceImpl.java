@@ -45,6 +45,24 @@ public class MascotaServiceImpl implements MascotaService {
     }
 
     @Override
+    public Optional<MascotaResponseVO> obtenerMascota(Integer fiIdMascota) {
+        MascotaResponseVO responseVO = new MascotaResponseVO();
+
+        try {
+            log.info("Búsqueda de todos las mascotas");
+            responseVO.setMensaje(Constants.MENSAJE);
+            responseVO.setFolio(Constants.FOLIO);
+            responseVO.setResultado(Collections.singletonMap("mascotas", this.mascotaRepository.findById(Long.valueOf(fiIdMascota))));
+        }catch (Exception e){
+            log.error("Error: " + e.getMessage());
+            log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
+            throw new ResponseException(e.getMessage(), "500", e.getLocalizedMessage());
+        }
+
+        return Optional.of(responseVO);
+    }
+
+    @Override
     public Optional<MascotaResponseVO> guardarMascota(MascotaRequestVO requestVO) {
         TaMascota mascota = new TaMascota();
         MascotaResponseVO responseVO = new MascotaResponseVO();
@@ -57,6 +75,32 @@ public class MascotaServiceImpl implements MascotaService {
             responseVO.setMensaje(Constants.MENSAJE);
             responseVO.setFolio(Constants.FOLIO);
             responseVO.setResultado(Collections.singletonMap("mascota", mascota));
+        }catch (Exception e){
+            log.error("Error: " + e.getMessage());
+            log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
+            throw new ResponseException(e.getMessage(), "500", e.getLocalizedMessage());
+        }
+
+        return Optional.of(responseVO);
+    }
+
+    @Override
+    public Optional<MascotaResponseVO> actualizarMascota(Integer fiIdMascota, MascotaRequestVO requestVO) {
+        MascotaResponseVO responseVO = new MascotaResponseVO();
+
+        try {
+
+            this.mascotaRepository.findById(Long.valueOf(fiIdMascota))
+                    .map(mascota -> {
+                        mascota.setFcNombre(requestVO.getFcNombre());
+                        mascota.setFcDescripcion((requestVO.getFcDescripcion()));
+                        this.mascotaRepository.save(mascota);
+                        log.info("Mascota actuaslizada");
+                        responseVO.setMensaje(Constants.MENSAJE);
+                        responseVO.setFolio(Constants.FOLIO);
+                        responseVO.setResultado(Collections.singletonMap("mascota", mascota));
+                        return responseVO;
+                    });
         }catch (Exception e){
             log.error("Error: " + e.getMessage());
             log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));

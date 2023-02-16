@@ -24,11 +24,24 @@ public class MascotaController {
         return ResponseEntity.ok(this.mascotaService.listarMascotas());
     }
 
+    @GetMapping(value = "/{fiIdMascota}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getMascota(@PathVariable("fiIdMascota") int fiIdMascota){
+        return ResponseEntity.ok(this.mascotaService.obtenerMascota(fiIdMascota));
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> postMascota(@Valid @RequestBody MascotaRequestVO requestVO, BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return this.apiUtils.validarRequest(bindingResult);
         }
         return ResponseEntity.ok(this.mascotaService.guardarMascota(requestVO));
+    }
+
+    @PutMapping(value = "/{fiIdMascota}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> putMascota(@PathVariable("fiIdMascota") int fiIdMascota, @Valid @RequestBody MascotaRequestVO requestVO, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return this.apiUtils.validarRequest(bindingResult);
+        }
+        return ResponseEntity.ok(this.mascotaService.actualizarMascota(fiIdMascota, requestVO));
     }
 }

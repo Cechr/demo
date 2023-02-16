@@ -8,5 +8,9 @@ import java.util.Optional;
 public interface MascotaService {
     Optional<MascotaResponseVO> listarMascotas();
 
+    Optional<MascotaResponseVO> obtenerMascota(Integer fiIdMascota);
+
     Optional<MascotaResponseVO> guardarMascota(MascotaRequestVO requestVO);
+
+    Optional<MascotaResponseVO> actualizarMascota(Integer fiIdMascota, MascotaRequestVO requestVO);
 }

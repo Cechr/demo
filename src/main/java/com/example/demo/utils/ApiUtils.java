@@ -34,10 +34,10 @@ public class ApiUtils {
         return errorVO;
     }
 
-    public String formatDate(Date date){
+    /*public String formatDate(Date date){
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmssSSS");
         return format.format(date);
-    }
+    }*/
 
     public String mensajeError(Exception e){
         if(e == null){
