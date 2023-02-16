@@ -13,4 +13,6 @@ public interface MascotaService {
     Optional<MascotaResponseVO> guardarMascota(MascotaRequestVO requestVO);
 
     Optional<MascotaResponseVO> actualizarMascota(Integer fiIdMascota, MascotaRequestVO requestVO);
+
+    Optional<MascotaResponseVO> borrarMascota(Integer fiIdMascota);
 }

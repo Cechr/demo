@@ -89,18 +89,36 @@ public class MascotaServiceImpl implements MascotaService {
         MascotaResponseVO responseVO = new MascotaResponseVO();
 
         try {
-
             this.mascotaRepository.findById(Long.valueOf(fiIdMascota))
                     .map(mascota -> {
                         mascota.setFcNombre(requestVO.getFcNombre());
                         mascota.setFcDescripcion((requestVO.getFcDescripcion()));
                         this.mascotaRepository.save(mascota);
-                        log.info("Mascota actuaslizada");
+                        log.info("Mascota actualizada");
                         responseVO.setMensaje(Constants.MENSAJE);
                         responseVO.setFolio(Constants.FOLIO);
                         responseVO.setResultado(Collections.singletonMap("mascota", mascota));
                         return responseVO;
                     });
+        }catch (Exception e){
+            log.error("Error: " + e.getMessage());
+            log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
+            throw new ResponseException(e.getMessage(), "500", e.getLocalizedMessage());
+        }
+
+        return Optional.of(responseVO);
+    }
+
+    @Override
+    public Optional<MascotaResponseVO> borrarMascota(Integer fiIdMascota) {
+        MascotaResponseVO responseVO = new MascotaResponseVO();
+
+        try {
+            this.mascotaRepository.deleteById(Long.valueOf(fiIdMascota));
+            log.info("Mascota borrada");
+            responseVO.setMensaje(Constants.MENSAJE);
+            responseVO.setFolio(Constants.FOLIO);
+            responseVO.setResultado(Collections.singletonMap("mascota", "Mascota con fiIdMascota= " + fiIdMascota + " borrada correctamente"));
         }catch (Exception e){
             log.error("Error: " + e.getMessage());
             log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
