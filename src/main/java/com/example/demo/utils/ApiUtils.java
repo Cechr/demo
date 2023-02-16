@@ -1,6 +1,7 @@
 package com.example.demo.utils;
 
 
+import com.example.demo.model.responsems.ResponseErrorVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -15,16 +16,16 @@ import java.util.UUID;
 @Slf4j
 public class ApiUtils {
 
-    /*public ResponseEntity<?> validarRequest(BindingResult bindingResult){
+    public ResponseEntity<?> validarRequest(BindingResult bindingResult){
         return ResponseEntity.badRequest().body(crearResponseError(bindingResult, null, 1));
-    }*/
+    }
 
-    /*public ResponseErrorVO crearResponseError(BindingResult bindingResult, Exception e, int a){
+    public ResponseErrorVO crearResponseError(BindingResult bindingResult, Exception e, int a){
         ResponseErrorVO errorVO = new ResponseErrorVO();
         errorVO.setCodigo(a == 1 ? "API.OA-400" : "API.OA-500");
         errorVO.setMensaje(a == 1 ? "Datos de entrada incorrectos, por favor valide su información" : "Error al realizar la operación, favor de validar");
         errorVO.setFolio(UUID.randomUUID().toString());
-        errorVO.setInfo("http://10.88.82.154:8083/info#400");
+        errorVO.setInfo("http://10.88.82.182:8084/info#400");
         errorVO.setDetalles(a == 1 ?
                 bindingResult.getFieldErrors().stream().map(fieldError -> fieldError.getField() + " " + fieldError.getDefaultMessage()).toList()
                 :Collections.singletonList(e.getMessage()));
@@ -36,7 +37,7 @@ public class ApiUtils {
     public String formatDate(Date date){
         SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmssSSS");
         return format.format(date);
-    }*/
+    }
 
     public String mensajeError(Exception e){
         if(e == null){

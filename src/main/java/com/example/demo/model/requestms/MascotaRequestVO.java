@@ -11,9 +11,7 @@ public class MascotaRequestVO implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @NotBlank
-    private String idSucursal;
+    private String fcNombre;
     @NotBlank
-    private String idTipoMesa;
-    @NotBlank
-    private String idTipoFlujo;
+    private String fcDescripcion;
 }

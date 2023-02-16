@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.TaMascota;
+import com.example.demo.model.requestms.MascotaRequestVO;
 import com.example.demo.model.responsems.MascotaResponseVO;
 import com.example.demo.model.responsems.ResponseException;
 import com.example.demo.repository.MascotaRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -33,6 +35,28 @@ public class MascotaServiceImpl implements MascotaService {
             responseVO.setMensaje(Constants.MENSAJE);
             responseVO.setFolio(Constants.FOLIO);
             responseVO.setResultado(Collections.singletonMap("mascotas", this.mascotaRepository.findAll()));
+        }catch (Exception e){
+            log.error("Error: " + e.getMessage());
+            log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
+            throw new ResponseException(e.getMessage(), "500", e.getLocalizedMessage());
+        }
+
+        return Optional.of(responseVO);
+    }
+
+    @Override
+    public Optional<MascotaResponseVO> guardarMascota(MascotaRequestVO requestVO) {
+        TaMascota mascota = new TaMascota();
+        MascotaResponseVO responseVO = new MascotaResponseVO();
+
+        try {
+            mascota.setFcNombre(requestVO.getFcNombre());
+            mascota.setFcDescripcion(requestVO.getFcDescripcion());
+            this.mascotaRepository.save(mascota);
+            log.info("Mascota registrada");
+            responseVO.setMensaje(Constants.MENSAJE);
+            responseVO.setFolio(Constants.FOLIO);
+            responseVO.setResultado(Collections.singletonMap("mascota", mascota));
         }catch (Exception e){
             log.error("Error: " + e.getMessage());
             log.error("Method FolioServiceImpl.java -> saveFolio: " + this.apiUtils.mensajeError(e));
